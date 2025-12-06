@@ -184,7 +184,7 @@ if (signupForm) {
       localStorage.setItem("userFullname", fullname);
 
       // --- BONUS: n8n TRIGGER ---
-      const webhookUrl = "https://YOUR-N8N-INSTANCE/webhook/signup";
+      const webhookUrl = "https://sreejeshmohan13.app.n8n.cloud/webhook/e125d772-be23-4f91-a7b8-183d80524c34";
       if (webhookUrl && !webhookUrl.includes("YOUR-N8N-INSTANCE")) {
         fetch(webhookUrl, {
           method: "POST",
