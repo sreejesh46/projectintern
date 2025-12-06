@@ -184,7 +184,8 @@ if (signupForm) {
       localStorage.setItem("userFullname", fullname);
 
       // --- BONUS: n8n TRIGGER ---
-      const webhookUrl = "https://sreejeshmohan13.app.n8n.cloud/webhook/e125d772-be23-4f91-a7b8-183d80524c34";
+      const webhookUrl =
+        "https://sreejeshmohan13.app.n8n.cloud/webhook/e125d772-be23-4f91-a7b8-183d80524c34";
       if (webhookUrl && !webhookUrl.includes("YOUR-N8N-INSTANCE")) {
         fetch(webhookUrl, {
           method: "POST",
@@ -309,18 +310,24 @@ onAuthStateChanged(auth, (user) => {
     // If on dashboard and user exists, show their email and name
     document.getElementById("user-email").textContent = user.email;
 
-    //  FIX: Consistently use user.displayName (the server-side source),
-    // and fall back to user.email if the display name is missing.
-    const displayFullName = user.displayName || user.email;
-    document.getElementById("user-fullname").textContent = displayFullName;
+    // 🔑 FIX START 🔑
+    // 1. Get the welcome message (only exists on initial signup redirect)
+    const storedWelcomeMessage = localStorage.getItem("welcomeMessage");
+    let displayFullName = user.displayName || user.email; // Default to server name or email
 
-    //  CLEANUP: Removing the old, unreliable local storage lookup
-    // const fullname = localStorage.getItem("userFullname");
-    // if (fullname) {
-    //   document.getElementById("user-fullname").textContent = fullname;
-    // }
+    // 2. If the welcome message exists, extract the name from it.
+    // This reliably provides the name before Firebase finishes propagating the update.
+    if (storedWelcomeMessage) {
+      // Regex to extract the name between "Welcome, " and "!"
+      const match = storedWelcomeMessage.match(/Welcome, (.*?)!/);
+      if (match && match[1]) {
+        displayFullName = match[1];
+      }
+    } // Display the determined full name
 
-    // Show welcome message
+    document.getElementById("user-fullname").textContent = displayFullName; // Show welcome message
+    // 🔑 FIX END 🔑
+
     const welcomeMessage = localStorage.getItem("welcomeMessage");
     if (welcomeMessage) {
       const msgBox = document.getElementById("message-box");
