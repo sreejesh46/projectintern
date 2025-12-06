@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="dashboard-header">
+      <a href="" id="dashboard-logo">HEXNOTE</a>
+      <button id="logout-btn" class="logout-button">Logout</button>
+    </header>
+
+    <div class="container dashboard-container">
+      <div id="message-box" class="error" style="display: none"></div>
+      <div class="welcome-message">
+        <h2>Welcome, <span id="user-fullname">user</span>!</h2>
+        <p>Your email is: <span id="user-email"></span></p>
+      </div>
+    </div>
+    <script type="module" src="./js/app.js"></script>
+  </body>
+</html>
