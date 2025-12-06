@@ -183,13 +183,12 @@ if (signupForm) {
       // CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
       localStorage.setItem("userFullname", fullname);
 
-      // --- BONUS: n8n TRIGGER ---
-      // --- BONUS: n8n TRIGGER FIX ---
+      // n8n TRIGGER ---
       const webhookUrl =
         "https://sreejeshmohan13.app.n8n.cloud/webhook/e125d772-be23-4f91-a7b8-183d80524c34";
 
       // 🔑 FINAL FIX: Add a small, non-blocking delay (100ms)
-      // to prevent the fetch request from being blocked by hosting environment timing issues.
+      // This resolves issues where the fetch is silently blocked by hosting timing/firewalls.
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       if (webhookUrl && !webhookUrl.includes("YOUR-N8N-INSTANCE")) {
@@ -204,6 +203,7 @@ if (signupForm) {
           }),
         }).catch((err) => console.log("n8n trigger failed (ignoring):", err));
       }
+      // --------------------------
       // --------------------------
       // --------------------------
 
