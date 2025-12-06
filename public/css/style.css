@@ -97,12 +97,35 @@ input.invalid {
   font-size: 1.2rem;
 }
 
+/* password toggle */
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  z-index: 2;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.65); /* Added color for better visibility */
+}
+
+/* 🔑 UPDATED CODE START */
 .toggle-password::before {
-  content: "👁️";
+  /* Font Awesome Unicode for 'eye' (Show Password) */
+  content: "\f06e"; 
+  font-family: "Font Awesome 6 Free"; 
+  font-weight: 900; /* Use 900 for the 'solid' style */
 }
+
 .toggle-password.active::before {
-  content: "🙈";
+  /* Font Awesome Unicode for 'eye-slash' (Hide Password) */
+  content: "\f070";
 }
+/* 🔑 UPDATED CODE END */
+
+/* You can safely delete the old emoji-based content rules if you wish */
+/*.toggle-password::before { content: "👁️"; } */
+/*.toggle-password.active::before { content: "🙈"; } */
 
 /* terms */
 .terms {
@@ -209,7 +232,6 @@ button:hover {
 }
 
 .dashboard-header #logout-btn,
-.dashboard-header .logout-button,
 .dashboard-header button {
   width: auto;
   padding: 8px 18px;

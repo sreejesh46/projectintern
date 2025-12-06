@@ -258,7 +258,7 @@ if (loginForm) {
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      // 🧹 CLEANUP: Removing all unreliable local storage name handling here.
+      // CLEANUP: Removing all unreliable local storage name handling here.
       // The name will be correctly pulled from the Firebase user object in Section 3.
 
       window.location.href = "dashboard.html";
@@ -309,12 +309,12 @@ onAuthStateChanged(auth, (user) => {
     // If on dashboard and user exists, show their email and name
     document.getElementById("user-email").textContent = user.email;
 
-    // 🔑 FIX: Consistently use user.displayName (the server-side source),
+    //  FIX: Consistently use user.displayName (the server-side source),
     // and fall back to user.email if the display name is missing.
     const displayFullName = user.displayName || user.email;
     document.getElementById("user-fullname").textContent = displayFullName;
 
-    // 🧹 CLEANUP: Removing the old, unreliable local storage lookup
+    //  CLEANUP: Removing the old, unreliable local storage lookup
     // const fullname = localStorage.getItem("userFullname");
     // if (fullname) {
     //   document.getElementById("user-fullname").textContent = fullname;
