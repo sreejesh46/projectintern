@@ -175,12 +175,12 @@ if (signupForm) {
       );
       const user = userCredential.user;
 
-      // 🔑 FIX: Save the Full Name to the Firebase User Profile
+      // FIX: Save the Full Name to the Firebase User Profile
       await updateProfile(user, {
         displayName: fullname, // Sets user.displayName for permanent, reliable retrieval
       });
 
-      // 🧹 CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
+      // CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
       localStorage.setItem("userFullname", fullname);
 
       // --- BONUS: n8n TRIGGER ---
