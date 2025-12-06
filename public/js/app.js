@@ -7,6 +7,7 @@ import {
   onAuthStateChanged,
   signOut,
   sendEmailVerification,
+  updateProfile, // ✅ Now properly imported
 } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 // --- PASTE YOUR FIREBASE CONFIG HERE ---
@@ -174,7 +175,12 @@ if (signupForm) {
       );
       const user = userCredential.user;
 
-      // Store fullname in local storage
+      // 🔑 FIX: Save the Full Name to the Firebase User Profile
+      await updateProfile(user, {
+        displayName: fullname, // Sets user.displayName for permanent, reliable retrieval
+      });
+
+      // 🧹 CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
       localStorage.setItem("userFullname", fullname);
 
       // --- BONUS: n8n TRIGGER ---
@@ -251,23 +257,9 @@ if (loginForm) {
     }
 
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      // In a real app, you would fetch the user's full name from your database (e.g., Firestore)
-      // For this demo, we'll just use the name from local storage if it exists.
-      // This won't be perfect if a different user logs in on the same browser.
-      const fullname = localStorage.getItem("userFullname"); // This is a simplification.
-      if (fullname) {
-        localStorage.setItem("userFullname", fullname);
-      } else {
-        // If not in storage, we could try to get it from a database, or just use the email
-        localStorage.setItem("userFullname", user.email);
-      }
+      await signInWithEmailAndPassword(auth, email, password);
+      // 🧹 CLEANUP: Removing all unreliable local storage name handling here.
+      // The name will be correctly pulled from the Firebase user object in Section 3.
 
       window.location.href = "dashboard.html";
     } catch (error) {
@@ -316,10 +308,17 @@ onAuthStateChanged(auth, (user) => {
   } else if (user && isDashboard) {
     // If on dashboard and user exists, show their email and name
     document.getElementById("user-email").textContent = user.email;
-    const fullname = localStorage.getItem("userFullname");
-    if (fullname) {
-      document.getElementById("user-fullname").textContent = fullname;
-    }
+
+    // 🔑 FIX: Consistently use user.displayName (the server-side source),
+    // and fall back to user.email if the display name is missing.
+    const displayFullName = user.displayName || user.email;
+    document.getElementById("user-fullname").textContent = displayFullName;
+
+    // 🧹 CLEANUP: Removing the old, unreliable local storage lookup
+    // const fullname = localStorage.getItem("userFullname");
+    // if (fullname) {
+    //   document.getElementById("user-fullname").textContent = fullname;
+    // }
 
     // Show welcome message
     const welcomeMessage = localStorage.getItem("welcomeMessage");
