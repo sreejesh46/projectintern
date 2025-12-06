@@ -104,28 +104,23 @@ input.invalid {
   right: 8px;
   transform: translateY(-50%);
   cursor: pointer;
-  z-index: 2;
+  z-index: 99; /* 🔑 IMPORTANT: Increase z-index to be above the input/autofill overlay */
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.65); /* Added color for better visibility */
+  color: rgba(255, 255, 255, 0.65); /* Ensure it has a visible color */
 }
+/* ... (the rest of the toggle styles) ... */
 
-/* 🔑 UPDATED CODE START */
+/*  UPDATED CODE START */
 .toggle-password::before {
   /* Font Awesome Unicode for 'eye' (Show Password) */
-  content: "\f06e"; 
-  font-family: "Font Awesome 6 Free"; 
+  content: "\f06e";
+  font-family: "Font Awesome 6 Free";
   font-weight: 900; /* Use 900 for the 'solid' style */
 }
 
 .toggle-password.active::before {
-  /* Font Awesome Unicode for 'eye-slash' (Hide Password) */
   content: "\f070";
 }
-/* 🔑 UPDATED CODE END */
-
-/* You can safely delete the old emoji-based content rules if you wish */
-/*.toggle-password::before { content: "👁️"; } */
-/*.toggle-password.active::before { content: "🙈"; } */
 
 /* terms */
 .terms {
@@ -282,4 +277,18 @@ button:hover {
 .terms-content h3 {
   margin-top: 0;
   color: #8ec5fc;
+}
+/* Fix for Chrome Autocomplete Color Issues */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  /* Keep the text color visible */
+  -webkit-text-fill-color: #fff !important;
+
+  /* Remove or override the background color */
+  -webkit-box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0) inset !important;
+
+  /* Keep the original border style */
+  transition: background-color 5000s ease-in-out 0s;
 }
