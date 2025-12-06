@@ -183,7 +183,7 @@ if (signupForm) {
       // CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
       localStorage.setItem("userFullname", fullname);
 
-      // n8n TRIGGER ---
+      // --- BONUS: n8n TRIGGER ---
       const webhookUrl =
         "https://sreejeshmohan13.app.n8n.cloud/webhook/e125d772-be23-4f91-a7b8-183d80524c34";
 
