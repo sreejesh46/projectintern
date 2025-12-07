@@ -19,8 +19,7 @@ This project is a simple demonstration of user authentication using Firebase. It
 - **Password Strength Meter:** Provides real-time feedback on password strength during sign-up.  
 - **Password Visibility Toggle:** Allows users to show or hide their password on both login and sign-up forms.  
 - **Form Validation:** Provides clear error messages for common issues like empty fields, mismatched passwords, and weak passwords.  
-- **Loading States:** Buttons show a spinner during processing to provide feedback to the user.  
-- **Email Verification:** Sends a verification email to the user after they sign up.  
+- **Loading States:** Buttons show a spinner during processing to provide feedback to the user.   
 - **Redirects:** Automatically redirects users to the dashboard after login/signup and back to the login page if they try to access the dashboard while not authenticated.
 
 ---
