@@ -181,7 +181,7 @@ if (signupForm) {
       });
 
       // CLEANUP: Store fullname in local storage (kept for the one-time welcome message below)
-      localStorage.setItem("userFullname", fullname);
+      //localStorage.setItem("userFullname", fullname);
 
       // --- BONUS: n8n TRIGGER ---
       const webhookUrl =
@@ -317,31 +317,26 @@ onAuthStateChanged(auth, (user) => {
     // If on dashboard and user exists, show their email and name
     document.getElementById("user-email").textContent = user.email;
 
-    // 🔑 FIX START 🔑
-    // 1. Get the welcome message (only exists on initial signup redirect)
-    const storedWelcomeMessage = localStorage.getItem("welcomeMessage");
-    let displayFullName = user.displayName || user.email; // Default to server name or email
+    // --- Name + welcome text on dashboard ---
+    const pendingName = localStorage.getItem("pendingFullname");
 
-    // 2. If the welcome message exists, extract the name from it.
-    // This reliably provides the name before Firebase finishes propagating the update.
-    if (storedWelcomeMessage) {
-      // Regex to extract the name between "Welcome, " and "!"
-      const match = storedWelcomeMessage.match(/Welcome, (.*?)!/);
-      if (match && match[1]) {
-        displayFullName = match[1];
-      }
-    } // Display the determined full name
+    // 1. Decide what to show as name
+    let displayFullName = pendingName || user.displayName || user.email;
+    document.getElementById("user-fullname").textContent = displayFullName;
 
-    document.getElementById("user-fullname").textContent = displayFullName; // Show welcome message
-    // 🔑 FIX END 🔑
-
+    // 2. Show the welcome message (if any)
     const welcomeMessage = localStorage.getItem("welcomeMessage");
     if (welcomeMessage) {
       const msgBox = document.getElementById("message-box");
-      msgBox.textContent = welcomeMessage;
-      msgBox.style.display = "block";
-      localStorage.removeItem("welcomeMessage");
+      if (msgBox) {
+        msgBox.textContent = welcomeMessage;
+        msgBox.style.display = "block";
+      }
     }
+
+    // 3. Clean up one-time values
+    if (pendingName) localStorage.removeItem("pendingFullname");
+    if (welcomeMessage) localStorage.removeItem("welcomeMessage");
   }
 });
 
