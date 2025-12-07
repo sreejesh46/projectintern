@@ -4,6 +4,13 @@ This project is a simple demonstration of user authentication using Firebase. It
 
 ---
 
+## 🌐 Live Demo
+
+- 🔗 Vercel Deployment: https://projectintern-chi.vercel.app/  
+- 🔗 Firebase Hosting: https://basicloginpage-bd9dd.web.app/
+
+---
+
 ## 🚀 Features
 
 - **Sign-up:** Users can create an account with their full name, email, and password.  
